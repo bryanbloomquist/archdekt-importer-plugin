@@ -24,7 +24,7 @@
  * If this file is called directly, then abort execution.
  */
 if (!defined('ABSPATH')) {
-  exit;
+    exit;
 }
 
 define('ADI_PLUGIN_PATH', plugin_dir_path(__FILE__));
@@ -33,8 +33,9 @@ define('ADI_PLUGIN_URL', plugin_dir_url(__FILE__));
 wp_enqueue_style('archidekt-importer', ADI_PLUGIN_URL . 'Dist/CSS/style.css', [], time());
 
 require_once ADI_PLUGIN_PATH . 'Includes/DecksPostType.php';
-require_once ADI_PLUGIN_PATH . 'Includes/ViewDecksData.php';
 require_once ADI_PLUGIN_PATH . 'Includes/ImportNewDeck.php';
+require_once ADI_PLUGIN_PATH . 'Includes/ProcessIncomingDeck.php';
+require_once ADI_PLUGIN_PATH . 'Includes/ViewDecksData.php';
 
 /**
  * Add theme support for post thumbnails

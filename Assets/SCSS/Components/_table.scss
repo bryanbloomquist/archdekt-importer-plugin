@@ -1,0 +1,38 @@
+.deck-table-wrap {
+  table {
+    border: 1px solid;
+    border-collapse: collapse;
+    thead {
+      tr {
+        height: 140px;
+        th {
+          border: 1px solid;
+          vertical-align: bottom;
+          &.vert-text {
+            position: relative;
+            white-space: nowrap;
+            span.rotate {
+              position: absolute;
+              top: 50%;
+              left: 50%;
+              transform: translate(-50%, -50%) rotate(90deg);
+            }
+          }
+          .popover {
+            cursor: help;
+          }
+        }
+      }
+    }
+    tbody {
+      tr {
+        td {
+          border: 1px solid;
+          &.text-center {
+            text-align: center;
+          }
+        }
+      }
+    }
+  }
+}

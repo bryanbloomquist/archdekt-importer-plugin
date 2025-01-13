@@ -1,0 +1,15 @@
+{
+  "name": "archidekt-importer",
+  "version": "1.0.0",
+  "description": "Archidekt Importer WordPress Plugin",
+  "author": "Bryan Bloomquist",
+  "license": "GPL-2.0-or-later",  
+  "devDependencies": {},
+  "browsersList": [
+    "last 10 major versions",
+    "ie >= 8"
+  ],
+  "scripts": {
+    "watch": "sass --watch Assets/SCSS/style.scss Dist/CSS/style.css"
+  }
+}

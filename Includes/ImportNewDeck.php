@@ -2,19 +2,23 @@
 
 namespace ArchidektImporter\Includes;
 
+/**
+ * Class ImportNewDeck
+ * This class creates an admin page for adding a new deck
+ */
 class ImportNewDeck
 {
     /**
      * Create a new Admin page for adding a new deck
      */
-    public static function addNewDeckPage()
+    public static function add_new_deck_page()
     {
         add_menu_page(
             'Add/Update Deck',
             'Add/Update Deck',
             'manage_options',
             'fetch-deck-data',
-            [self::class, 'addNewDeckPageContent'],
+            [self::class, 'add_new_deck_page_content'],
             'dashicons-insert',
             25
         );
@@ -23,7 +27,7 @@ class ImportNewDeck
     /**
      * Create a form for user to enter deck ID and fetch deck data
      */
-    public static function addNewDeckPageContent()
+    public static function add_new_deck_page_content()
     {
 ?>
         <div class="wrap">
@@ -41,7 +45,7 @@ class ImportNewDeck
     /**
      * Check if the deck ID is unique and fetch deck data
      */
-    public static function checkUniqueDeckId()
+    public static function check_for_unique_id()
     {
         if (isset($_POST['fetch-deck-data'])) {
             $deck_id = sanitize_text_field($_POST['deck-id']);
@@ -51,15 +55,15 @@ class ImportNewDeck
                 'meta_query' => array(['key' => 'archidekt_deck_id', 'value' => $deck_id]),
             ));
 
-            $deck_data = self::importDeckData($deck_id);
+            $deck_data = self::import_deck_data($deck_id);
 
             if ($deck_id_exists) {
                 echo '<div class="notice notice-error is-dismissible"><p>Deck ID already exists. Please enter a unique Deck ID.</p></div>';
 
-                self::checkForUpdates($deck_id, $deck_data);
+                self::check_for_updates($deck_id, $deck_data);
             } else {
                 if ($deck_data) {
-                    self::createNewDeckPost($deck_id, $deck_data);
+                    self::create_new_deck_post($deck_id, $deck_data);
                     echo '<div class="notice notice-success is-dismissible"><p>Deck "' . $deck_data['name'] . '" data fetched successfully.</p></div>';
                 } else {
                     echo '<div class="notice notice-error is-dismissible"><p>Deck data could not be fetched. Please check the Deck ID and try again.</p></div>';
@@ -71,8 +75,7 @@ class ImportNewDeck
     /**
      * Fetch deck data from Archidekt API
      */
-
-    public static function importDeckData($deck_id)
+    public static function import_deck_data($deck_id)
     {
         $api_url = "https://archidekt.com/api/decks/" . $deck_id . "/";
 
@@ -89,7 +92,6 @@ class ImportNewDeck
         }
 
         $body = wp_remote_retrieve_body($response);
-
         $data = json_decode($body, true);
 
         return $data;
@@ -98,26 +100,25 @@ class ImportNewDeck
     /**
      * Create a new Deck post if the deck ID is unique
      */
-
-    public static function createNewDeckPost($deck_id, $deck_data)
+    public static function create_new_deck_post($deck_id, $deck_data)
     {
-        $sorted_deck    = ProcessIncomingDeck::sortCardsByType($deck_data);
+        $sorted_deck    = ProcessIncomingDeck::sort_cards_by_type($deck_data);
         $deck_url       = "https://archidekt.com/decks/{$deck_id}";
         $commander      = $sorted_deck['Commander'][0]['card']['oracleCard']['name'];
         $partner        = $sorted_deck['Commander'][1]['card']['oracleCard']['name'];
-        $identity       = ProcessIncomingDeck::getColorIdentity($sorted_deck['Commander']);
-        $misc_values    = ProcessIncomingDeck::calculateMiscValues($deck_data);
+        $identity       = ProcessIncomingDeck::get_color_identity($sorted_deck['Commander']);
+        $misc_values    = ProcessIncomingDeck::calculate_misc_values($deck_data);
         $salt_sum       = $misc_values['salt_sum'];
         $deck_price     = number_format($misc_values['price'], 2);
         $total_mana     = $misc_values['mana_value'];
-        $battles        = ProcessIncomingDeck::countCardType($sorted_deck['Battle']);
-        $planeswalkers  = ProcessIncomingDeck::countCardType($sorted_deck['Planeswalker']);
-        $creatures      = ProcessIncomingDeck::countCardType($sorted_deck['Creature']);
-        $sorceries      = ProcessIncomingDeck::countCardType($sorted_deck['Sorcery']);
-        $instants       = ProcessIncomingDeck::countCardType($sorted_deck['Instant']);
-        $artifacts      = ProcessIncomingDeck::countCardType($sorted_deck['Artifact']);
-        $enchantments   = ProcessIncomingDeck::countCardType($sorted_deck['Enchantment']);
-        $lands          = ProcessIncomingDeck::countCardType($sorted_deck['Land']);
+        $battles        = ProcessIncomingDeck::count_card_type($sorted_deck['Battle']);
+        $planeswalkers  = ProcessIncomingDeck::count_card_type($sorted_deck['Planeswalker']);
+        $creatures      = ProcessIncomingDeck::count_card_type($sorted_deck['Creature']);
+        $sorceries      = ProcessIncomingDeck::count_card_type($sorted_deck['Sorcery']);
+        $instants       = ProcessIncomingDeck::count_card_type($sorted_deck['Instant']);
+        $artifacts      = ProcessIncomingDeck::count_card_type($sorted_deck['Artifact']);
+        $enchantments   = ProcessIncomingDeck::count_card_type($sorted_deck['Enchantment']);
+        $lands          = ProcessIncomingDeck::count_card_type($sorted_deck['Land']);
         $non_lands      = ($partner ? 98 : 99) - $lands;
         $average_mana   = number_format($total_mana / $non_lands, 2);
 
@@ -148,12 +149,10 @@ class ImportNewDeck
         update_post_meta($deck_post_id, 'lands', $lands);
     }
 
-
     /**
      * Update existing Deck post if Deck ID already exists
      */
-
-    public static function checkForUpdates($deck_id, $deck_data)
+    public static function check_for_updates($deck_id, $deck_data)
     {
         $deck_post = get_posts(array(
             'post_type' => 'deck',
@@ -174,5 +173,5 @@ class ImportNewDeck
     }
 }
 
-add_action('admin_menu', ['ArchidektImporter\Includes\ImportNewDeck', 'addNewDeckPage']);
-add_action('admin_init', ['ArchidektImporter\Includes\ImportNewDeck', 'checkUniqueDeckId']);
+add_action('admin_menu', ['ArchidektImporter\Includes\ImportNewDeck', 'add_new_deck_page']);
+add_action('admin_init', ['ArchidektImporter\Includes\ImportNewDeck', 'check_for_unique_id']);

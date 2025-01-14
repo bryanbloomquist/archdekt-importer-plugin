@@ -2,39 +2,59 @@
 
 namespace ArchidektImporter\Includes;
 
+/**
+ * Check if the WP_List_Table class exists, if not, include it
+ */
 if (!class_exists('WP_List_Table')) {
   require_once(ABSPATH . 'wp-admin/includes/class-wp-list-table.php');
 }
 
+/**
+ * Class ViewDecksData
+ * This class extends the WP_List_Table class to display a custom table in the WordPress Admin area
+ */
 class ViewDecksData extends \WP_List_Table
 {
+  /**
+   * The data for the table
+   */
   private $table_data;
 
-  public static function addTablePage()
+  /**
+   * Add the table page to the WordPress admin menu
+   */
+  public static function add_view_decks_data_page()
   {
     global $deckTablePage;
 
     $deckTablePage = add_menu_page(
-      'View Decks Table',
-      'View Decks Table',
+      'View Decks Data',
+      'View Decks Data',
       'manage_options',
       'view-decks-table',
-      [self::class, 'viewDecksTablePageContent'],
+      [self::class, 'view_decks_data_table'],
       'dashicons-editor-table',
       25
     );
   }
 
-  public static function viewDecksTablePageContent()
+  /**
+   * Display the content of the table page
+   */
+  public static function view_decks_data_table()
   {
     $deckTable = new ViewDecksData();
+
     echo '<div class="wrap deck-table-wrap"><h2>View Deck Data</h2>';
-    $deckTable->prepare_items();
+    $deckTable->prepare_table_items();
     $deckTable->display();
     echo '</div>';
   }
 
-  public static function setColumns()
+  /**
+   * Define the columns for the table
+   */
+  public static function define_table_columns()
   {
     $columns = [
       'deck_name'     => 'Deck Name',
@@ -58,27 +78,31 @@ class ViewDecksData extends \WP_List_Table
     return $columns;
   }
 
-  public function prepare_items()
+  /**
+   * Prepare the items for the table
+   */
+  public function prepare_table_items()
   {
-    $table_data = self::getTableData();
-
-    $columns  = self::setColumns();
-    $hidden   = [];
-    $sortable = self::setSortableColumns();
-    $primary  = 'deck_name';
+    $table_data = self::retrieve_table_data();
+    $columns    = self::define_table_columns();
+    $hidden     = [];
+    $sortable   = self::set_sortable_columns();
+    $primary    = 'deck_name';
 
     $this->_column_headers = [$columns, $hidden, $sortable, $primary];
 
-    usort($table_data, [self::class, 'usortReorder']);
+    usort($table_data, [self::class, 'usort_reorder']);
 
     $this->items = $table_data;
   }
 
-  public function getTableData()
+  /**
+   * Retrieve the data for the table
+   */
+  public function retrieve_table_data()
   {
     global $wpdb;
 
-    // Fetch posts of the 'deck' custom post type
     $query = "
         SELECT p.ID, p.post_title AS deck_name, pm.meta_key, pm.meta_value
         FROM {$wpdb->posts} AS p
@@ -87,11 +111,9 @@ class ViewDecksData extends \WP_List_Table
           AND p.post_status = 'publish'
     ";
 
-    // Get raw results
     $raw_results = $wpdb->get_results($query);
-
-    // Organize data by post ID
     $decks = [];
+
     foreach ($raw_results as $row) {
       $post_id = $row->ID;
       $meta_key = $row->meta_key;
@@ -118,13 +140,11 @@ class ViewDecksData extends \WP_List_Table
         ];
       }
 
-      // Assign meta values to specific columns
       if (array_key_exists($meta_key, $decks[$post_id])) {
         $decks[$post_id][$meta_key] = $meta_value;
       }
     }
 
-    // Convert the associative array to objects for compatibility
     $data = array_map(function ($deck) {
       return (object) $deck;
     }, $decks);
@@ -132,7 +152,10 @@ class ViewDecksData extends \WP_List_Table
     return $data;
   }
 
-  public function columnDefault($item, $column_name)
+  /**
+   * Default column rendering
+   */
+  public function column_default($item, $column_name)
   {
     switch ($column_name) {
       case 'deck_name':
@@ -151,12 +174,16 @@ class ViewDecksData extends \WP_List_Table
       case 'artifacts':
       case 'enchantments':
       case 'lands':
-      default:
         return $item->$column_name;
+      default:
+        return print_r($item, true);
     }
   }
 
-  public function setSortableColumns()
+  /**
+   * Define sortable columns
+   */
+  public function set_sortable_columns()
   {
     $sortable_columns = [
       'deck_name'     => ['deck_name', false],
@@ -180,15 +207,16 @@ class ViewDecksData extends \WP_List_Table
     return $sortable_columns;
   }
 
-  public function usortReorder($a, $b)
+  /**
+   * Sort the data
+   */
+  public function usort_reorder($a, $b)
   {
     $orderby = (!empty($_GET['orderby'])) ? $_GET['orderby'] : 'deck_name';
     $order   = (!empty($_GET['order'])) ? $_GET['order'] : 'asc';
-
-    $result = strcmp($a->$orderby, $b->$orderby);
-
+    $result  = strcmp($a->$orderby, $b->$orderby);
     return ($order === 'asc') ? $result : -$result;
   }
 }
 
-add_action('admin_menu', [ViewDecksData::class, 'addTablePage']);
+add_action('admin_menu', [ViewDecksData::class, 'add_view_decks_data_page']);

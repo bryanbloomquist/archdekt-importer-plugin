@@ -2,13 +2,16 @@
 
 namespace ArchidektImporter\Includes;
 
+/**
+ * Class DecksPostType
+ * This class creates a custom post type for Decks
+ */
 class DecksPostType
 {
     /**
      * Register a custom post type called "deck".
      */
-
-    public static function registerDeckPostType(): void
+    public static function register_deck_post_type(): void
     {
         $labels = array(
             'name'                  => _x('Decks', 'Post type general name', 'textdomain'),
@@ -59,7 +62,7 @@ class DecksPostType
     /**
      * Remove the "Add New" submenu item from the admin menu.
      */
-    public static function removeAddNewDeck(): void
+    public static function remove_add_new_deck_from_admin_menu(): void
     {
         global $submenu;
         unset($submenu['edit.php?post_type=deck'][10]);
@@ -68,7 +71,7 @@ class DecksPostType
     /**
      * Remove Add New Deck button from Decks page
      */
-    public static function removeAddNewDeckButton(): void
+    public static function remove_add_new_deck_from_admin_head(): void
     {
         global $post_type;
         if ($post_type === 'deck') {
@@ -81,11 +84,11 @@ class DecksPostType
     /**
      * Display Deck Information
      */
-    public static function displayDeckInformation($post): void
+    public static function display_deck_information($post): void
     {
         $deck_id = get_post_meta($post->ID, 'deck_id', true);
         $deck_data = get_post_meta($post->ID, 'deck_data', true);
-        $sorted_deck_data = ProcessIncomingDeck::sortCardsByType($deck_data);
+        $sorted_deck_data = ProcessIncomingDeck::sort_cards_by_type($deck_data);
         $last_updated = $deck_data['updatedAt'];
 
         if ($deck_id) : ?>
@@ -120,7 +123,7 @@ class DecksPostType
                             <div class="deck-category">
                                 <h3><?php echo $category; ?></h3>
                                 <?php foreach ($cards as $card) : ?>
-                                    <?php self::displayCardInfo($card); ?>
+                                    <?php self::display_card_info($card); ?>
                                 <?php endforeach; ?>
                             </div>
                         <?php endif; ?>
@@ -134,7 +137,7 @@ class DecksPostType
     /**
      * Display card information
      */
-    private static function displayCardInfo($card): void
+    private static function display_card_info($card): void
     {
         $quantity = esc_attr($card['quantity']);
         $name     = esc_attr($card['card']['oracleCard']['name']);
@@ -150,7 +153,7 @@ class DecksPostType
     /**
      * Add columns on Decks page to display commander name and partner
      */
-    public static function addCommanderColumn($columns): array
+    public static function add_commander_column($columns): array
     {
         $date = $columns['date'];
         unset($columns['date']);
@@ -163,7 +166,7 @@ class DecksPostType
     /**
      * Display commander name in the commander column
      */
-    public static function displayCommanderName($column, $post_id): void
+    public static function display_commander_name($column, $post_id): void
     {
         $deck = get_post_meta($post_id);
         if ($column === 'commander') {
@@ -177,7 +180,7 @@ class DecksPostType
     /**
      * Make custom columns sortable
      */
-    public static function makeCommanderColumnSortable($columns): array
+    public static function make_commander_column_sortable($columns): array
     {
         $columns['commander'] = 'commander';
         $columns['partner'] = 'partner';
@@ -187,7 +190,7 @@ class DecksPostType
     /**
      * Order by commander column
      */
-    public static function orderbyCommanderColumn($query): void
+    public static function set_orderby_commander_column($query): void
     {
         if (!is_admin() || !$query->is_main_query()) {
             return;
@@ -203,11 +206,11 @@ class DecksPostType
     }
 }
 
-add_action('init', [DecksPostType::class, 'registerDeckPostType']);
-add_action('admin_menu', [DecksPostType::class, 'removeAddNewDeck']);
-add_action('admin_head', [DecksPostType::class, 'removeAddNewDeckButton']);
-add_action('edit_form_after_title', [DecksPostType::class, 'displayDeckInformation']);
-add_filter('manage_deck_posts_columns', [DecksPostType::class, 'addCommanderColumn']);
-add_action('manage_deck_posts_custom_column', [DecksPostType::class, 'displayCommanderName'], 10, 2);
-add_filter('manage_edit-deck_sortable_columns', [DecksPostType::class, 'makeCommanderColumnSortable']);
-add_action('pre_get_posts', [DecksPostType::class, 'orderbyCommanderColumn']);
+add_action('init', [DecksPostType::class, 'register_deck_post_type']);
+add_action('admin_menu', [DecksPostType::class, 'remove_add_new_deck_from_admin_menu']);
+add_action('admin_head', [DecksPostType::class, 'remove_add_new_deck_from_admin_head']);
+add_action('edit_form_after_title', [DecksPostType::class, 'display_deck_information']);
+add_filter('manage_deck_posts_columns', [DecksPostType::class, 'add_commander_column']);
+add_action('manage_deck_posts_custom_column', [DecksPostType::class, 'display_commander_name'], 10, 2);
+add_filter('manage_edit-deck_sortable_columns', [DecksPostType::class, 'make_commander_column_sortable']);
+add_action('pre_get_posts', [DecksPostType::class, 'set_orderby_commander_column']);

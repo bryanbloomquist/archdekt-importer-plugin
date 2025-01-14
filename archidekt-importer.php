@@ -36,8 +36,3 @@ require_once ADI_PLUGIN_PATH . 'Includes/DecksPostType.php';
 require_once ADI_PLUGIN_PATH . 'Includes/ImportNewDeck.php';
 require_once ADI_PLUGIN_PATH . 'Includes/ProcessIncomingDeck.php';
 require_once ADI_PLUGIN_PATH . 'Includes/ViewDecksData.php';
-
-/**
- * Add theme support for post thumbnails
- */
-add_theme_support('post-thumbnails');

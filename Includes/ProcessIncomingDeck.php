@@ -2,13 +2,16 @@
 
 namespace ArchidektImporter\Includes;
 
+/**
+ * Class ProcessIncomingDeck
+ * This class processes the incoming deck data when importing a new deck
+ */
 class ProcessIncomingDeck
 {
     /**
      * Sort deck by primary card type
      */
-
-    public static function sortCardsByType($deck_data)
+    public static function sort_cards_by_type($deck_data)
     {
         $sorted_deck_data = [
             'Commander'    => [],
@@ -32,67 +35,62 @@ class ProcessIncomingDeck
         return $sorted_deck_data;
     }
 
-
     /**
      * Get the color identity of the deck
      */
-
-    public static function getColorIdentity($commanders)
+    public static function get_color_identity($commanders)
     {
-        $colorsArray = [];
-        $colorsString = '';
+        $colors_array = [];
+        $colors_string = '';
 
         foreach ($commanders as $commander) {
-            $cardColors = $commander['card']['oracleCard']['colorIdentity'];
-            foreach ($cardColors as $color) {
-                if (!in_array($color, $colorsArray)) {
-                    $colorsArray[] = $color;
+            $card_colors = $commander['card']['oracleCard']['colorIdentity'];
+            foreach ($card_colors as $color) {
+                if (!in_array($color, $colors_array)) {
+                    $colors_array[] = $color;
                 }
             }
         }
 
-        if (empty($colorsArray)) {
-            $colorsString = '<span class="mana-colorless"><span class="path1"></span><span class="path2"></span></span>';;
+        if (empty($colors_array)) {
+            $colors_string = '<span class="mana-colorless"><span class="path1"></span><span class="path2"></span></span>';;
         } else {
-            foreach ($colorsArray as $color) {
-                $colorsString .= '<span class="mana-' . strtolower($color) . '"><span class="path1"></span><span class="path2"></span></span>';
+            foreach ($colors_array as $color) {
+                $colors_string .= '<span class="mana-' . strtolower($color) . '"><span class="path1"></span><span class="path2"></span></span>';
             }
         }
 
-        return $colorsString;
+        return $colors_string;
     }
-
 
     /**
      * Get the remaining deck data
      */
-
-    public static function calculateMiscValues($deck)
+    public static function calculate_misc_values($deck)
     {
-        $saltSum   = 0;
-        $price     = 0;
-        $manaValue = 0;
+        $salt_sum   = 0;
+        $price      = 0;
+        $mana_value = 0;
 
         foreach ($deck['cards'] as $card) {
-            $saltSum += $card['card']['oracleCard']['salt'];
-            $price   += $card['card']['prices']['ck'];
+            $salt_sum += $card['card']['oracleCard']['salt'];
+            $price += $card['card']['prices']['ck'];
             if ($card['categories'][0] !== 'Commander') {
-                $manaValue += $card['card']['oracleCard']['cmc'];
+                $mana_value += $card['card']['oracleCard']['cmc'];
             }
         }
 
         return [
-            'salt_sum'   => $saltSum,
+            'salt_sum'   => $salt_sum,
             'price'      => $price,
-            'mana_value' => $manaValue
+            'mana_value' => $mana_value
         ];
     }
 
     /**
      * Get the number of cards per type (some cards allow duplicates of it to be in the same deck)
      */
-
-    public static function countCardType($cards)
+    public static function count_card_type($cards)
     {
         $card_count = 0;
         foreach ($cards as $card) {

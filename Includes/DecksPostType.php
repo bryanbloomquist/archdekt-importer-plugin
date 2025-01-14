@@ -146,9 +146,68 @@ class DecksPostType
         echo $modifier === "Foil" ? ' *F*' : '';
         echo '</pre>';
     }
+
+    /**
+     * Add columns on Decks page to display commander name and partner
+     */
+    public static function addCommanderColumn($columns): array
+    {
+        $date = $columns['date'];
+        unset($columns['date']);
+        $columns['commander'] = 'Commander';
+        $columns['partner'] = 'Partner';
+        $columns['date'] = $date;
+        return $columns;
+    }
+
+    /**
+     * Display commander name in the commander column
+     */
+    public static function displayCommanderName($column, $post_id): void
+    {
+        $deck = get_post_meta($post_id);
+        if ($column === 'commander') {
+            echo $deck['commander'][0];
+        }
+        if ($column === 'partner') {
+            echo $deck['partner'][0];
+        }
+    }
+
+    /**
+     * Make custom columns sortable
+     */
+    public static function makeCommanderColumnSortable($columns): array
+    {
+        $columns['commander'] = 'commander';
+        $columns['partner'] = 'partner';
+        return $columns;
+    }
+
+    /**
+     * Order by commander column
+     */
+    public static function orderbyCommanderColumn($query): void
+    {
+        if (!is_admin() || !$query->is_main_query()) {
+            return;
+        }
+        if ($query->get('orderby') === 'commander') {
+            $query->set('meta_key', 'commander');
+            $query->set('orderby', 'meta_value');
+        }
+        if ($query->get('orderby') === 'partner') {
+            $query->set('meta_key', 'partner');
+            $query->set('orderby', 'meta_value');
+        }
+    }
 }
 
-add_action('init', ['ArchidektImporter\Includes\DecksPostType', 'registerDeckPostType']);
-add_action('admin_menu', ['ArchidektImporter\Includes\DecksPostType', 'removeAddNewDeck']);
-add_action('admin_head', ['ArchidektImporter\Includes\DecksPostType', 'removeAddNewDeckButton']);
-add_action('edit_form_after_title', ['ArchidektImporter\Includes\DecksPostType', 'displayDeckInformation']);
+add_action('init', [DecksPostType::class, 'registerDeckPostType']);
+add_action('admin_menu', [DecksPostType::class, 'removeAddNewDeck']);
+add_action('admin_head', [DecksPostType::class, 'removeAddNewDeckButton']);
+add_action('edit_form_after_title', [DecksPostType::class, 'displayDeckInformation']);
+add_filter('manage_deck_posts_columns', [DecksPostType::class, 'addCommanderColumn']);
+add_action('manage_deck_posts_custom_column', [DecksPostType::class, 'displayCommanderName'], 10, 2);
+add_filter('manage_edit-deck_sortable_columns', [DecksPostType::class, 'makeCommanderColumnSortable']);
+add_action('pre_get_posts', [DecksPostType::class, 'orderbyCommanderColumn']);

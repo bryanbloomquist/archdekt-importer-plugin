@@ -2,92 +2,193 @@
 
 namespace ArchidektImporter\Includes;
 
-class ViewDecksData
-{
-    /**
-     * Create a new Admin page for viewing all decks data
-     */
-    public static function viewDecksDataPage()
-    {
-        add_menu_page(
-            'View Decks Data',
-            'View Decks Data',
-            'manage_options',
-            'view-decks-data',
-            [self::class, 'viewDecksDataPageContent'],
-            'dashicons-editor-table',
-            25
-        );
-    }
-
-    public static function viewDecksDataPageContent()
-    {
-        $all_decks = get_posts(array(
-            'post_type' => 'deck',
-            'numberposts' => -1,
-            'orderby' => 'title',
-            'order' => 'ASC'
-        ));
-?>
-        <div class="wrap deck-table-wrap">
-            <h2>View Deck Data</h2>
-            <table class="wp-list-table widefat striped">
-                <thead>
-                    <tr>
-                        <th>Deck Name</th>
-                        <th>Commander</th>
-                        <th>Partner/Background</th>
-                        <th>Color Identity</th>
-                        <th class="vert-text"><span class="rotate">Salt Sum<sup class="popover" title="The EDH Salt Score is a crowd sourced indicator of how salty cards make players in EDH. The data is aggregated by EDHREC. A card's Salt Score is on a scale of 0 to 4. The Salt sum to the total sum of all salt scores of all cards in your deck.">&#9432;</sup></span></th>
-                        <th class="vert-text"><span class="rotate">Deck Value</span></th>
-                        <th class="vert-text"><span class="rotate">Total Mana Value</span></th>
-                        <th class="vert-text"><span class="rotate">Avg Mana Value</span></th>
-                        <th class="vert-text"><span class="rotate">Battles</span></th>
-                        <th class="vert-text"><span class="rotate">Planeswalkers</span></th>
-                        <th class="vert-text"><span class="rotate">Creatures</span></th>
-                        <th class="vert-text"><span class="rotate">Sorceries</span></th>
-                        <th class="vert-text"><span class="rotate">Instants</span></th>
-                        <th class="vert-text"><span class="rotate">Artifacts</span></th>
-                        <th class="vert-text"><span class="rotate">Enchantments</span></th>
-                        <th class="vert-text"><span class="rotate">Lands</span></th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <?php foreach ($all_decks as $deck) :
-                        echo self::fillTableRow($deck);
-                    endforeach; ?>
-                </tbody>
-            </table>
-        </div>
-<?php
-    }
-
-    public static function fillTableRow($deck)
-    {
-        $deck_id = $deck->ID;
-        $data    = get_post_meta($deck_id);
-
-        $output  = '<tr>';
-        $output .= '<td><a href="' . $data['deck_url'][0] . '" target="_blank" rel="noreferrer noopener">' . $data['deck_name'][0] . '</a></td>';
-        $output .= '<td>' . $data['commander'][0] . '</td>';
-        $output .= '<td>' . $data['partner'][0] . '</td>';
-        $output .= '<td class="text-center">' . $data['identity'][0] . '</td>';
-        $output .= '<td class="text-center">' . $data['salt_sum'][0] . '</td>';
-        $output .= '<td class="text-center">$' . $data['deck_price'][0] . '</td>';
-        $output .= '<td class="text-center">' . $data['total_mana'][0] . '</td>';
-        $output .= '<td class="text-center">' . $data['average_mana'][0] . '</td>';
-        $output .= '<td class="text-center">' . $data['battles'][0] . '</td>';
-        $output .= '<td class="text-center">' . $data['planeswalkers'][0] . '</td>';
-        $output .= '<td class="text-center">' . $data['creatures'][0] . '</td>';
-        $output .= '<td class="text-center">' . $data['sorceries'][0] . '</td>';
-        $output .= '<td class="text-center">' . $data['instants'][0] . '</td>';
-        $output .= '<td class="text-center">' . $data['artifacts'][0] . '</td>';
-        $output .= '<td class="text-center">' . $data['enchantments'][0] . '</td>';
-        $output .= '<td class="text-center">' . $data['lands'][0] . '</td>';
-        $output .= '</tr>';
-
-        return $output;
-    }
+if (!class_exists('WP_List_Table')) {
+  require_once(ABSPATH . 'wp-admin/includes/class-wp-list-table.php');
 }
 
-add_action('admin_menu', [ViewDecksData::class, 'viewDecksDataPage']);
+class ViewDecksData extends \WP_List_Table
+{
+  private $table_data;
+
+  public static function addTablePage()
+  {
+    global $deckTablePage;
+
+    $deckTablePage = add_menu_page(
+      'View Decks Table',
+      'View Decks Table',
+      'manage_options',
+      'view-decks-table',
+      [self::class, 'viewDecksTablePageContent'],
+      'dashicons-editor-table',
+      25
+    );
+  }
+
+  public static function viewDecksTablePageContent()
+  {
+    $deckTable = new ViewDecksData();
+    echo '<div class="wrap deck-table-wrap"><h2>View Deck Data</h2>';
+    $deckTable->prepare_items();
+    $deckTable->display();
+    echo '</div>';
+  }
+
+  public static function setColumns()
+  {
+    $columns = [
+      'deck_name'     => 'Deck Name',
+      'commander'     => 'Commander',
+      'partner'       => 'Partner/Background',
+      'identity'      => 'Color Identity',
+      'salt_sum'      => 'Salt Sum',
+      'deck_price'    => 'Deck Value',
+      'total_mana'    => 'Total Mana Value',
+      'average_mana'  => 'Average Mana Value',
+      'battles'       => 'Battles',
+      'planeswalkers' => 'Planeswalkers',
+      'creatures'     => 'Creatures',
+      'sorceries'     => 'Sorceries',
+      'instants'      => 'Instants',
+      'artifacts'     => 'Artifacts',
+      'enchantments'  => 'Enchantments',
+      'lands'         => 'Lands'
+    ];
+
+    return $columns;
+  }
+
+  public function prepare_items()
+  {
+    $table_data = self::getTableData();
+
+    $columns  = self::setColumns();
+    $hidden   = [];
+    $sortable = self::setSortableColumns();
+    $primary  = 'deck_name';
+
+    $this->_column_headers = [$columns, $hidden, $sortable, $primary];
+
+    usort($table_data, [self::class, 'usortReorder']);
+
+    $this->items = $table_data;
+  }
+
+  public function getTableData()
+  {
+    global $wpdb;
+
+    // Fetch posts of the 'deck' custom post type
+    $query = "
+        SELECT p.ID, p.post_title AS deck_name, pm.meta_key, pm.meta_value
+        FROM {$wpdb->posts} AS p
+        LEFT JOIN {$wpdb->postmeta} AS pm ON p.ID = pm.post_id
+        WHERE p.post_type = 'deck'
+          AND p.post_status = 'publish'
+    ";
+
+    // Get raw results
+    $raw_results = $wpdb->get_results($query);
+
+    // Organize data by post ID
+    $decks = [];
+    foreach ($raw_results as $row) {
+      $post_id = $row->ID;
+      $meta_key = $row->meta_key;
+      $meta_value = $row->meta_value;
+
+      if (!isset($decks[$post_id])) {
+        $decks[$post_id] = [
+          'deck_name'     => $row->deck_name,
+          'commander'     => '',
+          'partner'       => '',
+          'identity'      => '',
+          'salt_sum'      => 0,
+          'deck_price'    => 0,
+          'total_mana'    => 0,
+          'average_mana'  => 0,
+          'battles'       => 0,
+          'planeswalkers' => 0,
+          'creatures'     => 0,
+          'sorceries'     => 0,
+          'instants'      => 0,
+          'artifacts'     => 0,
+          'enchantments'  => 0,
+          'lands'         => 0,
+        ];
+      }
+
+      // Assign meta values to specific columns
+      if (array_key_exists($meta_key, $decks[$post_id])) {
+        $decks[$post_id][$meta_key] = $meta_value;
+      }
+    }
+
+    // Convert the associative array to objects for compatibility
+    $data = array_map(function ($deck) {
+      return (object) $deck;
+    }, $decks);
+
+    return $data;
+  }
+
+  public function columnDefault($item, $column_name)
+  {
+    switch ($column_name) {
+      case 'deck_name':
+      case 'commander':
+      case 'partner':
+      case 'identity':
+      case 'salt_sum':
+      case 'deck_price':
+      case 'total_mana':
+      case 'average_mana':
+      case 'battles':
+      case 'planeswalkers':
+      case 'creatures':
+      case 'sorceries':
+      case 'instants':
+      case 'artifacts':
+      case 'enchantments':
+      case 'lands':
+      default:
+        return $item->$column_name;
+    }
+  }
+
+  public function setSortableColumns()
+  {
+    $sortable_columns = [
+      'deck_name'     => ['deck_name', false],
+      'commander'     => ['commander', false],
+      'partner'       => ['partner', false],
+      'identity'      => ['identity', false],
+      'salt_sum'      => ['salt_sum', true],
+      'deck_price'    => ['deck_price', true],
+      'total_mana'    => ['total_mana', true],
+      'average_mana'  => ['average_mana', true],
+      'battles'       => ['battles', true],
+      'planeswalkers' => ['planeswalkers', true],
+      'creatures'     => ['creatures', true],
+      'sorceries'     => ['sorceries', true],
+      'instants'      => ['instants', true],
+      'artifacts'     => ['artifacts', true],
+      'enchantments'  => ['enchantments', true],
+      'lands'         => ['lands', true]
+    ];
+
+    return $sortable_columns;
+  }
+
+  public function usortReorder($a, $b)
+  {
+    $orderby = (!empty($_GET['orderby'])) ? $_GET['orderby'] : 'deck_name';
+    $order   = (!empty($_GET['order'])) ? $_GET['order'] : 'asc';
+
+    $result = strcmp($a->$orderby, $b->$orderby);
+
+    return ($order === 'asc') ? $result : -$result;
+  }
+}
+
+add_action('admin_menu', [ViewDecksData::class, 'addTablePage']);

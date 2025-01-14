@@ -60,7 +60,7 @@ class ImportNewDeck
             } else {
                 if ($deck_data) {
                     self::createNewDeckPost($deck_id, $deck_data);
-                    echo '<div class="notice notice-success is-dismissible"><p>Deck data fetched successfully.</p></div>';
+                    echo '<div class="notice notice-success is-dismissible"><p>Deck "' . $deck_data['name'] . '" data fetched successfully.</p></div>';
                 } else {
                     echo '<div class="notice notice-error is-dismissible"><p>Deck data could not be fetched. Please check the Deck ID and try again.</p></div>';
                 }
@@ -110,8 +110,6 @@ class ImportNewDeck
         $salt_sum       = $misc_values['salt_sum'];
         $deck_price     = number_format($misc_values['price'], 2);
         $total_mana     = $misc_values['mana_value'];
-        $non_lands      = ($partner ? 98 : 99) - count($sorted_deck['Land']);
-        $average_mana   = number_format($total_mana / $non_lands, 2);
         $battles        = ProcessIncomingDeck::countCardType($sorted_deck['Battle']);
         $planeswalkers  = ProcessIncomingDeck::countCardType($sorted_deck['Planeswalker']);
         $creatures      = ProcessIncomingDeck::countCardType($sorted_deck['Creature']);
@@ -120,6 +118,8 @@ class ImportNewDeck
         $artifacts      = ProcessIncomingDeck::countCardType($sorted_deck['Artifact']);
         $enchantments   = ProcessIncomingDeck::countCardType($sorted_deck['Enchantment']);
         $lands          = ProcessIncomingDeck::countCardType($sorted_deck['Land']);
+        $non_lands      = ($partner ? 98 : 99) - $lands;
+        $average_mana   = number_format($total_mana / $non_lands, 2);
 
         $deck_post_id = wp_insert_post(array(
             'post_title' => $deck_data['name'],

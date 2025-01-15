@@ -105,7 +105,6 @@ class ImportNewDeck
                     echo '<div class="notice notice-error is-dismissible"><p>The deck_id for "' . $deck->post_title . '" could not be found.</p></div>';
                 }
             }
-            // echo '<div class="notice notice-success is-dismissible"><p>All decks data has been updated successfully.</p></div>';
         }
     }
 

@@ -27,11 +27,30 @@ if (!defined('ABSPATH')) {
     exit;
 }
 
+/**
+ * Define plugin constants
+ */
 define('ADI_PLUGIN_PATH', plugin_dir_path(__FILE__));
 define('ADI_PLUGIN_URL', plugin_dir_url(__FILE__));
 
+/**
+ * Activate the plugin
+ */
+function activate_archidekt_importer()
+{
+    require_once(ADI_PLUGIN_PATH . 'Includes/ActivatePlugin.php');
+    ActivatePlugin::activate_archidekt_importer();
+}
+register_activation_hook(__FILE__, 'activate_archidekt_importer');
+
+/**
+ * Enqueue the plugin styles
+ */
 wp_enqueue_style('archidekt-importer', ADI_PLUGIN_URL . 'Dist/CSS/style.css', [], time());
 
+/**
+ * Include the required files
+ */
 require_once ADI_PLUGIN_PATH . 'Includes/DecksPostType.php';
 require_once ADI_PLUGIN_PATH . 'Includes/ImportNewDeck.php';
 require_once ADI_PLUGIN_PATH . 'Includes/ProcessIncomingDeck.php';

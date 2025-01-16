@@ -91,29 +91,54 @@
   border-collapse: collapse;
 }
 .deck-table-wrap table thead tr {
-  height: 140px;
+  height: 180px;
 }
 .deck-table-wrap table thead tr th {
   border: 1px solid;
   vertical-align: bottom;
 }
-.deck-table-wrap table thead tr th.vert-text {
+.deck-table-wrap table thead tr th.column-identity, .deck-table-wrap table thead tr th.column-salt_sum, .deck-table-wrap table thead tr th.column-deck_price, .deck-table-wrap table thead tr th.column-total_mana, .deck-table-wrap table thead tr th.column-average_mana, .deck-table-wrap table thead tr th.column-battles, .deck-table-wrap table thead tr th.column-planeswalkers, .deck-table-wrap table thead tr th.column-creatures, .deck-table-wrap table thead tr th.column-sorceries, .deck-table-wrap table thead tr th.column-instants, .deck-table-wrap table thead tr th.column-artifacts, .deck-table-wrap table thead tr th.column-enchantments, .deck-table-wrap table thead tr th.column-lands {
   position: relative;
   white-space: nowrap;
 }
-.deck-table-wrap table thead tr th.vert-text span.rotate {
+.deck-table-wrap table thead tr th.column-identity > a, .deck-table-wrap table thead tr th.column-salt_sum > a, .deck-table-wrap table thead tr th.column-deck_price > a, .deck-table-wrap table thead tr th.column-total_mana > a, .deck-table-wrap table thead tr th.column-average_mana > a, .deck-table-wrap table thead tr th.column-battles > a, .deck-table-wrap table thead tr th.column-planeswalkers > a, .deck-table-wrap table thead tr th.column-creatures > a, .deck-table-wrap table thead tr th.column-sorceries > a, .deck-table-wrap table thead tr th.column-instants > a, .deck-table-wrap table thead tr th.column-artifacts > a, .deck-table-wrap table thead tr th.column-enchantments > a, .deck-table-wrap table thead tr th.column-lands > a {
+  display: flex;
   position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%) rotate(90deg);
-}
-.deck-table-wrap table thead tr th .popover {
-  cursor: help;
+  transform: rotate(90deg);
+  transform-origin: bottom left;
+  top: -30px;
+  justify-content: flex-end;
+  width: 160px;
 }
 .deck-table-wrap table tbody tr td {
   border: 1px solid;
 }
-.deck-table-wrap table tbody tr td.text-center {
+.deck-table-wrap table tfoot {
+  display: none;
+}
+.deck-table-wrap table .sort-by {
+  visibility: hidden;
+}
+.deck-table-wrap table .column-identity {
+  width: 99px;
+  text-align: center;
+}
+.deck-table-wrap table .column-salt_sum,
+.deck-table-wrap table .column-deck_price {
+  width: 74px;
+  text-align: center;
+}
+.deck-table-wrap table .column-total_mana,
+.deck-table-wrap table .column-average_mana,
+.deck-table-wrap table .column-battles,
+.deck-table-wrap table .column-planeswalkers,
+.deck-table-wrap table .column-creatures,
+.deck-table-wrap table .column-sorceries,
+.deck-table-wrap table .column-instants,
+.deck-table-wrap table .column-artifacts,
+.deck-table-wrap table .column-enchantments,
+.deck-table-wrap table .column-lands {
+  width: 49px;
   text-align: center;
 }
 

@@ -118,6 +118,7 @@ class ViewDecksData extends \WP_List_Table
       $post_id = $row->ID;
       $meta_key = $row->meta_key;
       $meta_value = $row->meta_value;
+      $deck_id = get_post_meta($post_id, 'deck_id', true);
 
       if (!isset($decks[$post_id])) {
         $decks[$post_id] = [
@@ -141,7 +142,11 @@ class ViewDecksData extends \WP_List_Table
       }
 
       if (array_key_exists($meta_key, $decks[$post_id])) {
-        $decks[$post_id][$meta_key] = $meta_value;
+        if ($meta_key === 'deck_name') {
+          $decks[$post_id][$meta_key] = '<span class="sort-by"' . $meta_value . '></span><a href="https://archidekt.com/decks/' . $deck_id . '" target="_blank" rel="noopener noreferrer">' . $meta_value . '</a>';
+        } else {
+          $decks[$post_id][$meta_key] = $meta_value;
+        }
       }
     }
 
@@ -214,7 +219,25 @@ class ViewDecksData extends \WP_List_Table
   {
     $orderby = (!empty($_GET['orderby'])) ? $_GET['orderby'] : 'deck_name';
     $order   = (!empty($_GET['order'])) ? $_GET['order'] : 'asc';
-    $result  = strcmp($a->$orderby, $b->$orderby);
+
+    // remove "$" from deck_price
+    if ($orderby === 'deck_price') {
+      $a->$orderby = str_replace('$', '', $a->$orderby);
+      $b->$orderby = str_replace('$', '', $b->$orderby);
+    }
+
+    if (is_numeric($a->$orderby) && is_numeric($b->$orderby)) {
+      $result = $a->$orderby - $b->$orderby;
+    } else {
+      $result = strcmp($a->$orderby, $b->$orderby);
+    }
+
+    // add "$" back to deck_price
+    if ($orderby === 'deck_price') {
+      $a->$orderby = '$' . $a->$orderby;
+      $b->$orderby = '$' . $b->$orderby;
+    }
+
     return ($order === 'asc') ? $result : -$result;
   }
 }

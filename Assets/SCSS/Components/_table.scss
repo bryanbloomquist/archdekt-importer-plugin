@@ -4,22 +4,37 @@
     border-collapse: collapse;
     thead {
       tr {
-        height: 140px;
+        height: 180px;
         th {
           border: 1px solid;
           vertical-align: bottom;
-          &.vert-text {
+          &.column-identity,
+          &.column-salt_sum,
+          &.column-deck_price,
+          &.column-total_mana,
+          &.column-average_mana,
+          &.column-battles,
+          &.column-planeswalkers,
+          &.column-creatures,
+          &.column-sorceries,
+          &.column-instants,
+          &.column-artifacts,
+          &.column-enchantments,
+          &.column-lands {
             position: relative;
-            white-space: nowrap;
-            span.rotate {
+            white-space: nowrap;  
+            & > a {
+              display: flex;
               position: absolute;
-              top: 50%;
-              left: 50%;
-              transform: translate(-50%, -50%) rotate(90deg);
+              // top: 50%;
+              // left: 50%;
+              // transform: translate(-50%, -50%) rotate(90deg);
+              transform: rotate(90deg);
+              transform-origin: bottom left;
+              top: -30px;
+              justify-content: flex-end;
+              width: 160px;
             }
-          }
-          .popover {
-            cursor: help;
           }
         }
       }
@@ -28,11 +43,36 @@
       tr {
         td {
           border: 1px solid;
-          &.text-center {
-            text-align: center;
-          }
         }
       }
+    }
+    tfoot {
+      display: none;
+    }
+    .sort-by {
+      visibility: hidden;
+    }
+    .column-identity {
+      width: 99px;
+      text-align: center;
+    }
+    .column-salt_sum,
+    .column-deck_price {
+      width: 74px;
+      text-align: center;
+    }
+    .column-total_mana,
+    .column-average_mana,
+    .column-battles,
+    .column-planeswalkers,
+    .column-creatures,
+    .column-sorceries,
+    .column-instants,
+    .column-artifacts,
+    .column-enchantments,
+    .column-lands {
+      width: 49px;
+      text-align: center;
     }
   }
 }

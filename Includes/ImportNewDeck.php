@@ -173,7 +173,7 @@ class ImportNewDeck
         $enchantments   = ProcessIncomingDeck::count_card_type($sorted_deck['Enchantment']);
         $lands          = ProcessIncomingDeck::count_card_type($sorted_deck['Land']);
         $non_lands      = ($partner ? 98 : 99) - $lands;
-        $average_mana   = number_format($total_mana / $non_lands, 2);
+        $average_mana   = number_format(($total_mana / ($non_lands)), 2);
 
         wp_update_post(['ID' => $deck_post_id, 'post_title' => $deck_name]);
         update_post_meta($deck_post_id, 'deck_id', $deck_id);

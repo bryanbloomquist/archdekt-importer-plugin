@@ -73,10 +73,12 @@ class ProcessIncomingDeck
         $mana_value = 0;
 
         foreach ($deck['cards'] as $card) {
-            $salt_sum += $card['card']['oracleCard']['salt'];
-            $price += $card['card']['prices']['ck'];
-            if ($card['categories'][0] !== 'Commander') {
-                $mana_value += $card['card']['oracleCard']['cmc'];
+            for ($i = 0; $i < $card['quantity']; $i++) {
+                $salt_sum += $card['card']['oracleCard']['salt'];
+                $price += $card['card']['prices']['ck'];
+                if ($card['categories'][0] !== 'Commander') {
+                    $mana_value += $card['card']['oracleCard']['cmc'];
+                }
             }
         }
 

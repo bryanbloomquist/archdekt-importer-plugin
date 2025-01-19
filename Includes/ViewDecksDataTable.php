@@ -144,6 +144,32 @@ class ViewDecksDataTable extends \WP_List_Table
       if (array_key_exists($meta_key, $decks[$post_id])) {
         if ($meta_key === 'deck_name') {
           $decks[$post_id][$meta_key] = '<span class="sort-by"' . $meta_value . '></span><a href="https://archidekt.com/decks/' . $deck_id . '" target="_blank" rel="noopener noreferrer">' . $meta_value . '</a>';
+        } elseif ($meta_key === 'salt_sum') {
+          $decks[$post_id][$meta_key] = '<span class="gradient" style="background-color: rgba(69,69,69,' . ($meta_value / 50) . '); color: #fff;">' . $meta_value . '</span>';
+        } elseif ($meta_key === 'deck_price') {
+          $meta_value = ltrim($meta_value, '$');
+          $decks[$post_id][$meta_key] = '<span class="sort-by">' . $meta_value . '</span><span class="gradient" style="background-color: rgba(133,187,101,' . ($meta_value / 500) . ');">' . '$' . $meta_value . '</span>';
+        } elseif ($meta_key === 'total_mana') {
+          $decks[$post_id][$meta_key] = '<span class="gradient" style="background-color: rgba(75,0,115,' . (($meta_value - 100) / 200) . '); color: #fff;">' . $meta_value . '</span>';
+        } elseif ($meta_key === 'average_mana') {
+          $sort_value = $meta_value * 100;
+          $decks[$post_id][$meta_key] = '<span class="sort-by">' . $sort_value . '</span><span class="gradient" style="background-color: rgba(245,105,115,' . ($sort_value / 450) . ');">' . $meta_value . '</span>';
+        } elseif ($meta_key === 'battles') {
+          $decks[$post_id][$meta_key] = '<span class="gradient" style="background-color: rgba(255,105,5,' . (($meta_value + 1) / 5) . ');">' . $meta_value . '</span>';
+        } elseif ($meta_key === 'planeswalkers') {
+          $decks[$post_id][$meta_key] = '<span class="gradient" style="background-color: rgba(175,105,237,' . (($meta_value + 1) / 5) . ');">' . $meta_value . '</span>';
+        } elseif ($meta_key === 'creatures') {
+          $decks[$post_id][$meta_key] = '<span class="gradient" style="background-color: rgba(255,215,0,' . ($meta_value / 35) . ');">' . $meta_value . '</span>';
+        } elseif ($meta_key === 'sorceries') {
+          $decks[$post_id][$meta_key] = '<span class="gradient" style="background-color: rgba(55,110,255,' . ($meta_value / 20) . ');">' . $meta_value . '</span>';
+        } elseif ($meta_key === 'instants') {
+          $decks[$post_id][$meta_key] = '<span class="gradient" style="background-color: rgba(210,40,60,' . ($meta_value / 20) . ');">' . $meta_value . '</span>';
+        } elseif ($meta_key === 'artifacts') {
+          $decks[$post_id][$meta_key] = '<span class="gradient" style="background-color: rgba(185,115,55,' . ($meta_value / 15) . ');">' . $meta_value . '</span>';
+        } elseif ($meta_key === 'enchantments') {
+          $decks[$post_id][$meta_key] = '<span class="gradient" style="background-color: rgba(255,105,185,' . ($meta_value / 15) . ');">' . $meta_value . '</span>';
+        } elseif ($meta_key === 'lands') {
+          $decks[$post_id][$meta_key] = '<span class="gradient" style="background-color: rgba(45,155,0,' . (($meta_value - 30) / 10) . ');">' . $meta_value . '</span>';
         } else {
           $decks[$post_id][$meta_key] = $meta_value;
         }
@@ -220,22 +246,10 @@ class ViewDecksDataTable extends \WP_List_Table
     $orderby = (!empty($_GET['orderby'])) ? $_GET['orderby'] : 'deck_name';
     $order   = (!empty($_GET['order'])) ? $_GET['order'] : 'asc';
 
-    // remove "$" from deck_price
-    if ($orderby === 'deck_price') {
-      $a->$orderby = str_replace('$', '', $a->$orderby);
-      $b->$orderby = str_replace('$', '', $b->$orderby);
-    }
-
     if (is_numeric($a->$orderby) && is_numeric($b->$orderby)) {
       $result = $a->$orderby - $b->$orderby;
     } else {
       $result = strcmp($a->$orderby, $b->$orderby);
-    }
-
-    // add "$" back to deck_price
-    if ($orderby === 'deck_price') {
-      $a->$orderby = '$' . $a->$orderby;
-      $b->$orderby = '$' . $b->$orderby;
     }
 
     return ($order === 'asc') ? $result : -$result;

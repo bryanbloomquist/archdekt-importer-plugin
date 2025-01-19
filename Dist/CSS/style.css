@@ -129,6 +129,22 @@
 .deck-table-wrap table tbody tr td {
   border: 1px solid;
 }
+.deck-table-wrap table tbody tr td.column-salt_sum, .deck-table-wrap table tbody tr td.column-deck_price, .deck-table-wrap table tbody tr td.column-total_mana, .deck-table-wrap table tbody tr td.column-average_mana, .deck-table-wrap table tbody tr td.column-battles, .deck-table-wrap table tbody tr td.column-planeswalkers, .deck-table-wrap table tbody tr td.column-creatures, .deck-table-wrap table tbody tr td.column-sorceries, .deck-table-wrap table tbody tr td.column-instants, .deck-table-wrap table tbody tr td.column-artifacts, .deck-table-wrap table tbody tr td.column-enchantments, .deck-table-wrap table tbody tr td.column-lands {
+  padding: 0;
+  position: relative;
+}
+.deck-table-wrap table tbody tr td.column-salt_sum span.gradient, .deck-table-wrap table tbody tr td.column-deck_price span.gradient, .deck-table-wrap table tbody tr td.column-total_mana span.gradient, .deck-table-wrap table tbody tr td.column-average_mana span.gradient, .deck-table-wrap table tbody tr td.column-battles span.gradient, .deck-table-wrap table tbody tr td.column-planeswalkers span.gradient, .deck-table-wrap table tbody tr td.column-creatures span.gradient, .deck-table-wrap table tbody tr td.column-sorceries span.gradient, .deck-table-wrap table tbody tr td.column-instants span.gradient, .deck-table-wrap table tbody tr td.column-artifacts span.gradient, .deck-table-wrap table tbody tr td.column-enchantments span.gradient, .deck-table-wrap table tbody tr td.column-lands span.gradient {
+  color: #000;
+  padding: 8px 10px;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
 .deck-table-wrap table tfoot {
   display: none;
 }

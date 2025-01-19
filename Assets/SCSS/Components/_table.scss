@@ -26,9 +26,6 @@
             & > a {
               display: flex;
               position: absolute;
-              // top: 50%;
-              // left: 50%;
-              // transform: translate(-50%, -50%) rotate(90deg);
               transform: rotate(90deg);
               transform-origin: bottom left;
               top: -30px;
@@ -43,6 +40,33 @@
       tr {
         td {
           border: 1px solid;
+          &.column-salt_sum,
+          &.column-deck_price,
+          &.column-total_mana,
+          &.column-average_mana,
+          &.column-battles,
+          &.column-planeswalkers,
+          &.column-creatures,
+          &.column-sorceries,
+          &.column-instants,
+          &.column-artifacts,
+          &.column-enchantments,
+          &.column-lands {
+            padding: 0;
+            position: relative;
+            span.gradient {
+              color: #000;
+              padding: 8px 10px;
+              position: absolute;
+              top: 0;
+              left: 0;
+              right: 0;
+              bottom: 0;
+              display: flex;
+              align-items: center;
+              justify-content: center;
+            }
+          }
         }
       }
     }

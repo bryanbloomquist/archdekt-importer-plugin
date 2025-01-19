@@ -19,7 +19,6 @@
  * Domain Path:       /languages
  */
 
-
 /**
  * If this file is called directly, then abort execution.
  */
@@ -34,12 +33,13 @@ define('ADI_PLUGIN_PATH', plugin_dir_path(__FILE__));
 define('ADI_PLUGIN_URL', plugin_dir_url(__FILE__));
 
 /**
- * Activate the plugin
+ * Check to see if a Custom Post Type named "deck" already exists before activating the plugin
  */
 function activate_archidekt_importer()
 {
-    require_once(ADI_PLUGIN_PATH . 'Includes/ActivatePlugin.php');
-    ActivatePlugin::activate_archidekt_importer();
+    if (post_type_exists('deck')) {
+        wp_die('Sorry, Archidekt Importer plugin could not be activated. A Custom Post Type named "decks" already exists.<br><a href="' . admin_url('plugins.php') . '">&laquo; Return to Plugins</a>');
+    }
 }
 register_activation_hook(__FILE__, 'activate_archidekt_importer');
 
@@ -51,7 +51,11 @@ wp_enqueue_style('archidekt-importer', ADI_PLUGIN_URL . 'Dist/CSS/style.css', []
 /**
  * Include the required files
  */
-require_once ADI_PLUGIN_PATH . 'Includes/DecksPostType.php';
-require_once ADI_PLUGIN_PATH . 'Includes/ImportNewDeck.php';
-require_once ADI_PLUGIN_PATH . 'Includes/ProcessIncomingDeck.php';
-require_once ADI_PLUGIN_PATH . 'Includes/ViewDecksData.php';
+require_once ADI_PLUGIN_PATH . 'Includes/DecksPostType/CreateDecksPostType.php';
+require_once ADI_PLUGIN_PATH . 'Includes/DecksPostType/DecksAdminPage.php';
+require_once ADI_PLUGIN_PATH . 'Includes/DecksPostType/DecksPostPage.php';
+require_once ADI_PLUGIN_PATH . 'Includes/DecksPostType/UpdateDecksPostMeta.php';
+require_once ADI_PLUGIN_PATH . 'Includes/ImportDeckData/ImportArchidektData.php';
+require_once ADI_PLUGIN_PATH . 'Includes/ImportDeckData/ImportDeckDataAdminPage.php';
+require_once ADI_PLUGIN_PATH . 'Includes/ImportDeckData/ProcessImportedData.php';
+require_once ADI_PLUGIN_PATH . 'Includes/ViewDecksDataTable.php';

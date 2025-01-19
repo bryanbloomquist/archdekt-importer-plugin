@@ -10,10 +10,10 @@ if (!class_exists('WP_List_Table')) {
 }
 
 /**
- * Class ViewDecksData
+ * Class ViewDecksDataTable
  * This class extends the WP_List_Table class to display a custom table in the WordPress Admin area
  */
-class ViewDecksData extends \WP_List_Table
+class ViewDecksDataTable extends \WP_List_Table
 {
   /**
    * The data for the table
@@ -43,7 +43,7 @@ class ViewDecksData extends \WP_List_Table
    */
   public static function view_decks_data_table()
   {
-    $deckTable = new ViewDecksData();
+    $deckTable = new ViewDecksDataTable();
 
     echo '<div class="wrap deck-table-wrap"><h2>View Deck Data</h2>';
     $deckTable->prepare_table_items();
@@ -242,4 +242,4 @@ class ViewDecksData extends \WP_List_Table
   }
 }
 
-add_action('admin_menu', [ViewDecksData::class, 'add_view_decks_data_page']);
+add_action('admin_menu', [ViewDecksDataTable::class, 'add_view_decks_data_page']);

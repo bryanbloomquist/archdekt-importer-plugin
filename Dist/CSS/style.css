@@ -86,6 +86,22 @@
   color: #0d0f0f;
 }
 
+.post-type-deck .wp-list-table .column-thumbnail {
+  width: 75px;
+}
+.post-type-deck .wp-list-table .column-thumbnail img {
+  display: block;
+  height: auto;
+  width: 100%;
+}
+.post-type-deck .wp-list-table .column-identity {
+  text-align: center;
+  width: 75px;
+}
+.post-type-deck .wp-list-table .column-identity [class^=mana-]:not(.last-child) {
+  margin-inline-end: 2px;
+}
+
 .deck-table-wrap table {
   border: 1px solid;
   border-collapse: collapse;

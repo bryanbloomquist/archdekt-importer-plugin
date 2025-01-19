@@ -1,0 +1,19 @@
+.post-type-deck {
+  .wp-list-table {
+    .column-thumbnail {
+      width: 75px;
+      img {
+        display: block;
+        height: auto;
+        width: 100%;
+      }
+    }
+    .column-identity {
+      text-align: center;
+      width: 75px;
+      [class^="mana-"]:not(.last-child) {
+        margin-inline-end: 2px;
+      }
+    }
+  }
+}

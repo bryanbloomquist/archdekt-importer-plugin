@@ -32,12 +32,14 @@ class DecksAdminPage
     }
 
     /**
-     * Add columns on Decks Admin page to display deck commander and partner
+     * Add columns on Decks Admin page to display deck commander (card image and name) and partner name
      */
     public static function add_commander_column($columns): array
     {
         $date = $columns['date'];
         unset($columns['date']);
+        $columns['identity'] = 'Identity';
+        $columns['thumbnail'] = 'Card';
         $columns['commander'] = 'Commander';
         $columns['partner'] = 'Partner';
         $columns['date'] = $date;
@@ -45,11 +47,18 @@ class DecksAdminPage
     }
 
     /**
-     * Display commander and partner names in the correct columns
+     * Display commander (card image and name) and partner names in the correct columns
      */
     public static function display_commander_name($column, $post_id): void
     {
         $deck = get_post_meta($post_id);
+        if ($column === 'identity') {
+            echo $deck['identity'][0];
+        }
+        if ($column === 'thumbnail') {
+            $thumbnail = get_the_post_thumbnail($post_id, 'medium');
+            echo $thumbnail;
+        }
         if ($column === 'commander') {
             echo $deck['commander'][0];
         }

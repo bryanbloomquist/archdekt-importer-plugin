@@ -17,7 +17,8 @@ class ImportDeckDataAdminPage
      */
     public static function add_import_deck_admin_page()
     {
-        add_menu_page(
+        add_submenu_page(
+            'edit.php?post_type=deck',
             'Import Deck',
             'Import Deck',
             'manage_options',

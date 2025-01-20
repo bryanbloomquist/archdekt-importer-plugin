@@ -10,10 +10,14 @@
     }
     .column-identity {
       text-align: center;
-      width: 75px;
-      [class^="mana-"]:not(.last-child) {
-        margin-inline-end: 2px;
+      width: 80px;
+      .color-identity {
+        display: none;
       }
+    }
+    .sort-by {
+      display: none;
+      visibility: hidden;
     }
   }
 }

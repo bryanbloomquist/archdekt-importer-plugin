@@ -40,6 +40,7 @@
       tr {
         td {
           border: 1px solid;
+          &.column-identity,
           &.column-salt_sum,
           &.column-deck_price,
           &.column-total_mana,
@@ -65,6 +66,114 @@
               display: flex;
               align-items: center;
               justify-content: center;
+              &.colorless {
+                background-color: $mana-c;
+              }
+              &.mono-white {
+                background-color: $mana-w;
+              }
+              &.mono-blue {
+                background-color: $mana-u;
+              }
+              &.mono-black {
+                background-color: $mana-b;
+              }
+              &.mono-red {
+                background-color: $mana-r;
+              }
+              &.mono-green {
+                background-color: $mana-g;
+              }
+              &.azorious {
+                background-image: linear-gradient(to right, $mana-w 50%, $mana-u 50%);
+              }
+              &.dimir {
+                background-image: linear-gradient(to right, $mana-u 50%, $mana-b 50%);
+              }
+              &.rakdos {
+                background-image: linear-gradient(to right, $mana-b 50%, $mana-r 50%);
+              }
+              &.gruul {
+                background-image: linear-gradient(to right, $mana-r 50%, $mana-g 50%);
+              }
+              &.selesnya {
+                background-image: linear-gradient(to right, $mana-g 50%, $mana-w 50%);
+              }
+              &.orzhov {
+                background-image: linear-gradient(to right, $mana-w 50%, $mana-b 50%);
+              }
+              &.izzet {
+                background-image: linear-gradient(to right, $mana-u 50%, $mana-r 50%);
+              }
+              &.golgari {
+                background-image: linear-gradient(to right, $mana-b 50%, $mana-g 50%);
+              }
+              &.boros {
+                background-image: linear-gradient(to right, $mana-r 50%, $mana-w 50%);
+              }
+              &.simic {
+                background-image: linear-gradient(to right, $mana-g 50%, $mana-u 50%);
+              }
+              &.esper {
+                background-image: linear-gradient(to right, $mana-w 33%, $mana-u 33%, $mana-u 66%, $mana-b 66%);
+              }              
+              &.grixis {
+                background-image: linear-gradient(to right, $mana-u 33%, $mana-b 33%, $mana-b 66%, $mana-r 66%);
+              }
+              &.jund {
+                background-image: linear-gradient(to right, $mana-b 33%, $mana-r 33%, $mana-r 66%, $mana-g 66%);
+              }
+              &.naya {
+                background-image: linear-gradient(to right, $mana-r 33%, $mana-g 33%, $mana-g 66%, $mana-w 66%);
+              }
+              &.bant {
+                background-image: linear-gradient(to right, $mana-g 33%, $mana-w 33%, $mana-w 66%, $mana-u 66%);
+              }
+              &.abzan {
+                background-image: linear-gradient(to right, $mana-w 33%, $mana-b 33%, $mana-b 66%, $mana-g 66%);
+              }
+              &.jeskai {
+                background-image: linear-gradient(to right, $mana-u 33%, $mana-r 33%, $mana-r 66%, $mana-w 66%);
+              }
+              &.sultai {
+                background-image: linear-gradient(to right, $mana-b 33%, $mana-g 33%, $mana-g 66%, $mana-u 66%);
+              }
+              &.mardu {
+                background-image: linear-gradient(to right, $mana-r 33%, $mana-w 33%, $mana-w 66%, $mana-b 66%);
+              }
+              &.temur {
+                background-image: linear-gradient(to right, $mana-g 33%, $mana-u 33%, $mana-u 66%, $mana-r 66%);
+              }
+              &.yore-tiller {
+                background-image: linear-gradient(to right, $mana-w 25%, $mana-u 25%, $mana-u 50%, $mana-b 50%, $mana-b 75%, $mana-r 75%);
+              }
+              &.glint-eye {
+                background-image: linear-gradient(to right, $mana-u 25%, $mana-b 25%, $mana-b 50%, $mana-r 50%, $mana-r 75%, $mana-g 75%);
+              }
+              &.dune-brood {
+                background-image: linear-gradient(to right, $mana-b 25%, $mana-r 25%, $mana-r 50%, $mana-g 50%, $mana-g 75%, $mana-w 75%);
+              }
+              &.ink-treader {
+                background-image: linear-gradient(to right, $mana-r 25%, $mana-g 25%, $mana-g 50%, $mana-w 50%, $mana-w 75%, $mana-u 75%);
+              }
+              &.witch-maw {
+                background-image: linear-gradient(to right, $mana-g 25%, $mana-w 25%, $mana-w 50%, $mana-u 50%, $mana-u 75%, $mana-b 75%);
+              }
+              &.five-color {
+                background-image: linear-gradient(to right, $mana-w 20%, $mana-u 20%, $mana-u 40%, $mana-b 40%, $mana-b 60%, $mana-r 60%, $mana-r 80%, $mana-g 80%);
+              }
+              .color-identity {
+                // color: #fff;
+                // filter: drop-shadow(0 0 2px #000);
+                // font-weight: 700;
+                display: none;
+              }
+              .mana-symbols {
+                width: calc(100% + 20px);
+                margin: 0 -10px;
+                display: flex;
+                justify-content: space-around;
+              }
             }
           }
         }
@@ -75,6 +184,7 @@
     }
     .sort-by {
       visibility: hidden;
+      display: none;
     }
     .column-identity {
       width: 99px;

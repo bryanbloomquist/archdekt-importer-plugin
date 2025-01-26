@@ -3,6 +3,7 @@
 namespace ArchidektImporter\Includes\DecksPostType;
 
 use ArchidektImporter\Includes\ImportDeckData\ProcessImportedData as ProcessImportedData;
+use ArchidektImporter\Includes\ImportDeckData\ImportAllDeckImages as ImportAllDeckImages;
 
 /**
  * Class UpdateDeckPostMeta
@@ -29,6 +30,7 @@ class UpdateDecksPostMeta
    */
   public static function update_deck_post_meta($deck_id, $deck_data, $deck_post_id)
   {
+    $updated_at       = $deck_data['updatedAt'];
     $sorted_deck     = ProcessImportedData::sort_cards_by_type($deck_data);
     $deck_name       = $deck_data['name'];
     $deck_url        = "https://archidekt.com/decks/{$deck_id}";

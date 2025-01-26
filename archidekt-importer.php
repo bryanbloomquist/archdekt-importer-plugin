@@ -51,6 +51,7 @@ wp_enqueue_style('archidekt-importer', ADI_PLUGIN_URL . 'Dist/CSS/style.css', []
 /**
  * Include the required files
  */
+require_once ADI_PLUGIN_PATH . 'Includes/DebugLogger/Logger.php';
 require_once ADI_PLUGIN_PATH . 'Includes/DecksPostType/CreateDecksPostType.php';
 require_once ADI_PLUGIN_PATH . 'Includes/DecksPostType/DecksAdminPage.php';
 require_once ADI_PLUGIN_PATH . 'Includes/DecksPostType/DecksPostPage.php';
@@ -59,6 +60,7 @@ require_once ADI_PLUGIN_PATH . 'Includes/ImportDeckData/GetColorIdentity.php';
 require_once ADI_PLUGIN_PATH . 'Includes/ImportDeckData/ImportArchidektData.php';
 require_once ADI_PLUGIN_PATH . 'Includes/ImportDeckData/ImportDeckDataAdminPage.php';
 require_once ADI_PLUGIN_PATH . 'Includes/ImportDeckData/ProcessImportedData.php';
-require_once ADI_PLUGIN_PATH . 'Includes/DecksDataTable/DecksDataTableSubPage.php';
-require_once ADI_PLUGIN_PATH . 'Includes/DecksDataTable/RetrieveTableData.php';
-require_once ADI_PLUGIN_PATH . 'Includes/DecksDataTable/DecksTableColumns.php';
+require_once ADI_PLUGIN_PATH . 'Includes/DecksDataTable/TableView.php';
+require_once ADI_PLUGIN_PATH . 'Includes/DecksDataTable/RetrieveData.php';
+require_once ADI_PLUGIN_PATH . 'Includes/DecksDataTable/Columns.php';
+require_once ADI_PLUGIN_PATH . 'Includes/WinLossTracker/WinLossPage.php';

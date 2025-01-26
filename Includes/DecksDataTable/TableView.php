@@ -2,8 +2,8 @@
 
 namespace ArchidektImporter\Includes\DecksDataTable;
 
-use ArchidektImporter\Includes\DecksDataTable\RetrieveTableData as RetrieveTableData;
-use ArchidektImporter\Includes\DecksDataTable\DecksTableColumns as DecksTableColumns;
+use ArchidektImporter\Includes\DecksDataTable\RetrieveData as RetrieveData;
+use ArchidektImporter\Includes\DecksDataTable\Columns as Columns;
 
 /**
  * Check if the WP_List_Table class exists, if not, include it
@@ -13,10 +13,10 @@ if (!class_exists('WP_List_Table')) {
 }
 
 /**
- * Class DecksDataTablePage
+ * Class TableView
  * This class extends the WP_List_Table class to display a custom table in the WordPress Admin area
  */
-class DecksDataTablePage extends \WP_List_Table
+class TableView extends \WP_List_Table
 {
   /**
    * The data for the table
@@ -46,7 +46,7 @@ class DecksDataTablePage extends \WP_List_Table
    */
   public static function view_decks_data_table()
   {
-    $deckTable = new DecksDataTablePage();
+    $deckTable = new TableView();
 
     echo '<div class="wrap deck-table-wrap"><h2>View Deck Data</h2>';
     $deckTable->prepare_table_items();
@@ -59,10 +59,10 @@ class DecksDataTablePage extends \WP_List_Table
    */
   public function prepare_table_items()
   {
-    $table_data = RetrieveTableData::retrieve_table_data();
-    $columns    = DecksTableColumns::define_table_columns();
+    $table_data = RetrieveData::retrieve_table_data();
+    $columns    = Columns::define_table_columns();
     $hidden     = [];
-    $sortable   = DecksTableColumns::set_sortable_columns();
+    $sortable   = Columns::set_sortable_columns();
     $primary    = 'deck_name';
 
     $this->_column_headers = [$columns, $hidden, $sortable, $primary];
@@ -118,4 +118,4 @@ class DecksDataTablePage extends \WP_List_Table
   }
 }
 
-add_action('admin_menu', [DecksDataTablePage::class, 'add_view_decks_data_page']);
+add_action('admin_menu', [TableView::class, 'add_view_decks_data_page']);

@@ -3,10 +3,10 @@
 namespace ArchidektImporter\Includes\DecksDataTable;
 
 /**
- * Class DecksTableColumns
+ * Class Columns
  * This class extends the WP_List_Table class to display a custom table in the WordPress Admin area
  */
-class DecksTableColumns
+class Columns
 {
 
   /**

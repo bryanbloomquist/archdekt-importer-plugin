@@ -24,7 +24,6 @@ class ImportDeckDataAdminPage
             'manage_options',
             'import-deck-page',
             [self::class, 'import_deck_admin_page_content'],
-            'dashicons-insert',
             25
         );
     }

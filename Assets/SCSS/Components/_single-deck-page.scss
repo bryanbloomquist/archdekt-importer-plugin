@@ -1,0 +1,35 @@
+.win-loss-container {
+  margin-block-start: 20px;
+
+  .win-loss-table {
+    width: calc(100% - 40px);
+    margin: 20px;
+    border-collapse: collapse;
+    th, td {
+      border: 1px solid #ccc;
+      text-align: center;
+      text-transform: capitalize;
+      &.win {
+        background-color: greenyellow;
+      }
+      &.loss {
+        background-color: lightcoral;
+      }
+    }
+    tr.new-data-row {
+      td {
+        padding: 0;
+        input,
+        select,
+        option {
+          align-items: center;
+          display: flex;
+          height: 45px;
+          justify-content: center;
+          text-align: center;
+          width: 100%;
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,30 @@
+.win-loss-tracker {
+  display: flex;
+  flex-direction: column;
+  gap: 25px;
+  .win-loss-form {
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0px 1px 4px 0px rgba(0,0,0,0.25);
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    padding: 20px;
+    width: 440px;
+    & > input,
+    & > select {
+      max-width: 100%;
+      width: 100%;
+    }
+    form-group {
+      align-items: center;
+      display: flex;
+      input[type="radio"] {
+        margin: 0 5px 0 0;
+      }
+      label {
+        margin-inline-end: 20px;
+      }
+    }
+  }
+}

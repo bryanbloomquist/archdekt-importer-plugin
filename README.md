@@ -19,3 +19,16 @@
     B. Add deck score rating column
 
     C. ✅ Add gradient background colors to columns
+
+## Deck ID's That Can Be Used For Testing
+
+    10904863
+    10904322
+    10901865
+    10903797
+    10901947
+    10843117
+    10901467
+    10844142
+    10830874
+    10904712

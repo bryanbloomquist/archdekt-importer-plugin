@@ -110,7 +110,10 @@ class WinLossPage
 
     update_post_meta($win_loss_data['deck_post_id'], 'win_loss_data', $existing_win_loss_data);
 
-    echo '<div class="notice notice-success is-dismissible"><p>Win Loss Data added successfully.</p></div>';
+    $url  = '/wp-admin/post.php?post=' . $win_loss_data['deck_post_id'] . '&action=edit';
+    $name = get_the_title($win_loss_data['deck_post_id']);
+
+    echo '<div class="notice notice-success is-dismissible"><p>Win Loss Data for deck "<a href="' . $url . '">' . $name . '</a>" was added successfully.</p></div>';
   }
 }
 

@@ -62,7 +62,7 @@ class DecksPostPage
 						<th>Date</th>
 						<th>Opponents</th>
 						<th>Win/Loss</th>
-						<th>Action</th>
+						<th class="column-action">Action</th>
 					</tr>
 				</thead>
 				<tbody>
@@ -71,15 +71,21 @@ class DecksPostPage
 							<td><?php echo $data['date']; ?></td>
 							<td><?php echo $data['number_of_people']; ?></td>
 							<td class="<?php echo $data['win_loss']; ?>"><?php echo $data['win_loss']; ?></td>
-							<td>
+							<td class="column-action">
 								<form method="post">
 									<input type="hidden" name="win-loss-id" value="<?php echo $data['wld_id']; ?>">
 									<input type="hidden" name="post-id" value="<?php echo $postID; ?>">
-									<input type="submit" name="delete-win-loss" value="Remove" class="button button-secondary">
+									<input type="submit" name="delete-win-loss" value="Remove Row" class="button action-button">
 								</form>
 							</td>
 						</tr>
 					<?php endforeach; ?>
+					<tr>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td class="column-action"><a href="/wp-admin/edit.php?post_type=deck&page=win-loss-page" class="button action-button">Add Row</a></td>
+					</tr>
 				</tbody>
 			</table>
 		</div>

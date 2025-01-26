@@ -2,7 +2,7 @@
 
 1.  Individual Decks Page
 
-    A. Inputs to track a deck's win/loss record
+    A. ✅ Inputs to track a deck's win/loss record
 
     B. Instead of listing the cards contents, find way to import deck image from scryfall
 

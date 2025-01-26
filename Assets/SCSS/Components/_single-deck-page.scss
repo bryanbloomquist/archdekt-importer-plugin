@@ -15,6 +15,14 @@
       &.loss {
         background-color: lightcoral;
       }
+      &.column-action {
+        padding: 0;
+        .action-button {
+          border: 0;
+          padding: 8px 10px;
+          width: 100%;
+        }
+      }
     }
     tr.new-data-row {
       td {
@@ -32,4 +40,8 @@
       }
     }
   }
+}
+
+#postbox-container-2 {
+  float: unset;
 }

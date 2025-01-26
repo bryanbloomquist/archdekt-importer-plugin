@@ -125,6 +125,14 @@
 .win-loss-container .win-loss-table th.loss, .win-loss-container .win-loss-table td.loss {
   background-color: lightcoral;
 }
+.win-loss-container .win-loss-table th.column-action, .win-loss-container .win-loss-table td.column-action {
+  padding: 0;
+}
+.win-loss-container .win-loss-table th.column-action .action-button, .win-loss-container .win-loss-table td.column-action .action-button {
+  border: 0;
+  padding: 8px 10px;
+  width: 100%;
+}
 .win-loss-container .win-loss-table tr.new-data-row td {
   padding: 0;
 }
@@ -137,6 +145,10 @@
   justify-content: center;
   text-align: center;
   width: 100%;
+}
+
+#postbox-container-2 {
+  float: unset;
 }
 
 .deck-table-wrap table {

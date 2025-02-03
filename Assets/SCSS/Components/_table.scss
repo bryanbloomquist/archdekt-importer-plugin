@@ -1,5 +1,5 @@
 .deck-table-wrap {
-  table {
+  table.deck_page_view-decks-table {
     border: 1px solid;
     border-collapse: collapse;
     thead {
@@ -84,7 +84,7 @@
               &.mono-green {
                 background-color: $mana-g;
               }
-              &.azorious {
+              &.azorius {
                 background-image: linear-gradient(to right, $mana-w 50%, $mana-u 50%);
               }
               &.dimir {
@@ -147,25 +147,22 @@
               &.yore-tiller {
                 background-image: linear-gradient(to right, $mana-w 25%, $mana-u 25%, $mana-u 50%, $mana-b 50%, $mana-b 75%, $mana-r 75%);
               }
-              &.glint-eye {
+              &.witch-maw {
                 background-image: linear-gradient(to right, $mana-u 25%, $mana-b 25%, $mana-b 50%, $mana-r 50%, $mana-r 75%, $mana-g 75%);
               }
-              &.dune-brood {
+              &.ink-treader {
                 background-image: linear-gradient(to right, $mana-b 25%, $mana-r 25%, $mana-r 50%, $mana-g 50%, $mana-g 75%, $mana-w 75%);
               }
-              &.ink-treader {
+              &.dune-brood {
                 background-image: linear-gradient(to right, $mana-r 25%, $mana-g 25%, $mana-g 50%, $mana-w 50%, $mana-w 75%, $mana-u 75%);
               }
-              &.witch-maw {
+              &.glint-eye {
                 background-image: linear-gradient(to right, $mana-g 25%, $mana-w 25%, $mana-w 50%, $mana-u 50%, $mana-u 75%, $mana-b 75%);
               }
               &.five-color {
                 background-image: linear-gradient(to right, $mana-w 20%, $mana-u 20%, $mana-u 40%, $mana-b 40%, $mana-b 60%, $mana-r 60%, $mana-r 80%, $mana-g 80%);
               }
               .color-identity {
-                // color: #fff;
-                // filter: drop-shadow(0 0 2px #000);
-                // font-weight: 700;
                 display: none;
               }
               .mana-symbols {
@@ -190,13 +187,19 @@
       width: 99px;
       text-align: center;
     }
-    .column-salt_sum,
+    .column-salt_sum {
+      width: 50px;
+      text-align: center;
+    }
     .column-deck_price {
-      width: 74px;
+      width: 70px;
       text-align: center;
     }
     .column-total_mana,
-    .column-average_mana,
+    .column-average_mana {
+      width: 40px;
+      text-align: center;
+    }
     .column-battles,
     .column-planeswalkers,
     .column-creatures,
@@ -205,7 +208,7 @@
     .column-artifacts,
     .column-enchantments,
     .column-lands {
-      width: 49px;
+      width: 30px;
       text-align: center;
     }
   }

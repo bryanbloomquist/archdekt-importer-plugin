@@ -50,30 +50,30 @@ class GetColorIdentity
 			if (in_array('White', $colors_array) && in_array('Blue', $colors_array)) {
 				$color_identity = '06 Azorius';
 				$color_symbols  = $white_mana_symbol . $blue_mana_symbol;
-			} elseif (in_array('White', $colors_array) && in_array('Black', $colors_array)) {
-				$color_identity = '07 Orzhov';
-				$color_symbols  = $white_mana_symbol . $black_mana_symbol;
 			} elseif (in_array('Blue', $colors_array) && in_array('Black', $colors_array)) {
-				$color_identity = '08 Dimir';
+				$color_identity = '07 Dimir';
 				$color_symbols  = $blue_mana_symbol . $black_mana_symbol;
-			} elseif (in_array('Blue', $colors_array) && in_array('Red', $colors_array)) {
-				$color_identity = '09 Izzet';
-				$color_symbols  = $blue_mana_symbol . $red_mana_symbol;
 			} elseif (in_array('Black', $colors_array) && in_array('Red', $colors_array)) {
-				$color_identity = '10 Rakdos';
+				$color_identity = '08 Rakdos';
 				$color_symbols  = $black_mana_symbol . $red_mana_symbol;
-			} elseif (in_array('Black', $colors_array) && in_array('Green', $colors_array)) {
-				$color_identity = '11 Golgari';
-				$color_symbols  = $black_mana_symbol . $green_mana_symbol;
 			} elseif (in_array('Red', $colors_array) && in_array('Green', $colors_array)) {
-				$color_identity = '12 Gruul';
+				$color_identity = '09 Gruul';
 				$color_symbols  = $red_mana_symbol . $green_mana_symbol;
-			} elseif (in_array('White', $colors_array) && in_array('Red', $colors_array)) {
-				$color_identity = '13 Boros';
-				$color_symbols  = $red_mana_symbol . $white_mana_symbol;
 			} elseif (in_array('White', $colors_array) && in_array('Green', $colors_array)) {
-				$color_identity = '14 Selesnya';
+				$color_identity = '10 Selesnya';
 				$color_symbols  = $green_mana_symbol . $white_mana_symbol;
+			} elseif (in_array('White', $colors_array) && in_array('Black', $colors_array)) {
+				$color_identity = '11 Orzhov';
+				$color_symbols  = $white_mana_symbol . $black_mana_symbol;
+			} elseif (in_array('Blue', $colors_array) && in_array('Red', $colors_array)) {
+				$color_identity = '12 Izzet';
+				$color_symbols  = $blue_mana_symbol . $red_mana_symbol;
+			} elseif (in_array('Black', $colors_array) && in_array('Green', $colors_array)) {
+				$color_identity = '13 Golgari';
+				$color_symbols  = $black_mana_symbol . $green_mana_symbol;
+			} elseif (in_array('White', $colors_array) && in_array('Red', $colors_array)) {
+				$color_identity = '14 Boros';
+				$color_symbols  = $red_mana_symbol . $white_mana_symbol;
 			} elseif (in_array('Blue', $colors_array) && in_array('Green', $colors_array)) {
 				$color_identity = '15 Simic';
 				$color_symbols  = $green_mana_symbol . $blue_mana_symbol;
@@ -114,18 +114,18 @@ class GetColorIdentity
 			if (!in_array('Green', $colors_array)) {
 				$color_identity = '26 Yore-Tiller';
 				$color_symbols  = $white_mana_symbol . $blue_mana_symbol . $black_mana_symbol . $red_mana_symbol;
-			} elseif (!in_array('Red', $colors_array)) {
-				$color_identity = '27 Glint-Eye';
-				$color_symbols  = $green_mana_symbol . $white_mana_symbol . $blue_mana_symbol . $black_mana_symbol;
-			} elseif (!in_array('Black', $colors_array)) {
-				$color_identity = '28 Dune-Brood';
-				$color_symbols  = $red_mana_symbol . $green_mana_symbol . $white_mana_symbol . $blue_mana_symbol;
-			} elseif (!in_array('Blue', $colors_array)) {
-				$color_identity = '29 Ink-Treader';
-				$color_symbols  = $black_mana_symbol . $red_mana_symbol . $green_mana_symbol . $white_mana_symbol;
 			} elseif (!in_array('White', $colors_array)) {
-				$color_identity = '30 Witch-Maw';
+				$color_identity = '27 Witch-Maw';
 				$color_symbols  = $blue_mana_symbol . $black_mana_symbol . $red_mana_symbol . $green_mana_symbol;
+			} elseif (!in_array('Blue', $colors_array)) {
+				$color_identity = '28 Ink-Treader';
+				$color_symbols  = $black_mana_symbol . $red_mana_symbol . $green_mana_symbol . $white_mana_symbol;
+			} elseif (!in_array('Black', $colors_array)) {
+				$color_identity = '29 Dune-Brood';
+				$color_symbols  = $red_mana_symbol . $green_mana_symbol . $white_mana_symbol . $blue_mana_symbol;
+			} elseif (!in_array('Red', $colors_array)) {
+				$color_identity = '30 Glint-Eye';
+				$color_symbols  = $green_mana_symbol . $white_mana_symbol . $blue_mana_symbol . $black_mana_symbol;
 			}
 		} elseif (count($colors_array) === 5) {
 			$color_identity = '31 Five-Color';

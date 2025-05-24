@@ -117,5 +117,5 @@ class WinLossPage
   }
 }
 
-add_action('admin_menu', [WinLossPage::class, 'add_win_loss_admin_page']);
-add_action('admin_init', [WinLossPage::class, 'handle_win_loss_form_submit']);
+// add_action('admin_menu', [WinLossPage::class, 'add_win_loss_admin_page']);
+// add_action('admin_init', [WinLossPage::class, 'handle_win_loss_form_submit']);

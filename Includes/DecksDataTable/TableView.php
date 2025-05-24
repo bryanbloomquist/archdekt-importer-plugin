@@ -108,7 +108,11 @@ class TableView extends \WP_List_Table
     $orderby = (!empty($_GET['orderby'])) ? $_GET['orderby'] : 'deck_name';
     $order   = (!empty($_GET['order'])) ? $_GET['order'] : 'asc';
 
-    if (is_numeric($a->$orderby) && is_numeric($b->$orderby)) {
+    if ($orderby === 'deck_price') {
+      $a_val = floatval(str_replace(['$', ','], '', strip_tags($a->$orderby)));
+      $b_val = floatval(str_replace(['$', ','], '', strip_tags($b->$orderby)));
+      $result = $a_val <=> $b_val;
+    } elseif (is_numeric($a->$orderby) && is_numeric($b->$orderby)) {
       $result = $a->$orderby - $b->$orderby;
     } else {
       $result = strcmp($a->$orderby, $b->$orderby);

@@ -56,7 +56,9 @@ class RetrieveData
 
       if (array_key_exists($meta_key, $decks[$post_id])) {
         if ($meta_key === 'deck_name') {
-          $decks[$post_id][$meta_key] = '<span class="sort-by"' . $meta_value . '></span><a href="https://archidekt.com/decks/' . $deck_id . '" target="_blank" rel="noopener noreferrer">' . $meta_value . '</a>';
+          // get the admin url for the deck
+          $deck_url = get_edit_post_link($post_id, 'url');
+          $decks[$post_id][$meta_key] = '<span class="sort-by"' . $meta_value . '></span><a href="' . $deck_url . '">' . $meta_value . '</a><a href="https://archidekt.com/decks/' . $deck_id . '" target="_blank" rel="noopener noreferrer"><span class="dashicons dashicons-external"></span></a>';
         } elseif ($meta_key === 'salt_sum') {
           $decks[$post_id][$meta_key] = '<span class="gradient" style="background-color: rgba(69,69,69,' . ($meta_value / 50) . '); color: #fff;">' . $meta_value . '</span>';
         } elseif ($meta_key === 'deck_price') {

@@ -206,8 +206,6 @@ class DecksPostPage
 		if (empty($power_ranking)) {
 			return;
 		}
-		$power_rank = get_post_meta($postID, 'power_rank', true);
-		echo $power_rank;
 	?>
 		<div class="postbox power-ranking-container">
 			<h2 class="hndle power-ranking-header">Power Ranking <span class="power-ranking-value"><?php echo $power_ranking['total']; ?></span></h2>

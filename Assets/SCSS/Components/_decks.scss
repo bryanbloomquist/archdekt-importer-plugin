@@ -21,3 +21,8 @@
     }
   }
 }
+
+#wpadminbar .quicklinks .menupop #wp-admin-bar-new-deck {
+  display: none !important;
+  visibility: hidden !important;
+}

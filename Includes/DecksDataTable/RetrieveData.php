@@ -43,6 +43,8 @@ class RetrieveData
           'deck_price'    => 0,
           'total_mana'    => 0,
           'average_mana'  => 0,
+          'has_win'       => 0,
+          'power_rank' => 0,
           'battles'       => 0,
           'planeswalkers' => 0,
           'creatures'     => 0,
@@ -58,7 +60,7 @@ class RetrieveData
         if ($meta_key === 'deck_name') {
           // get the admin url for the deck
           $deck_url = get_edit_post_link($post_id, 'url');
-          $decks[$post_id][$meta_key] = '<span class="sort-by"' . $meta_value . '></span><a href="' . $deck_url . '">' . $meta_value . '</a><a href="https://archidekt.com/decks/' . $deck_id . '" target="_blank" rel="noopener noreferrer"><span class="dashicons dashicons-external"></span></a>';
+          $decks[$post_id][$meta_key] = '<span class="sort-by">' . $meta_value . '</span><a href="' . $deck_url . '">' . $meta_value . '</a><a href="https://archidekt.com/decks/' . $deck_id . '" target="_blank" rel="noopener noreferrer"><span class="dashicons dashicons-external"></span></a>';
         } elseif ($meta_key === 'salt_sum') {
           $decks[$post_id][$meta_key] = '<span class="gradient" style="background-color: rgba(69,69,69,' . ($meta_value / 50) . '); color: #fff;">' . $meta_value . '</span>';
         } elseif ($meta_key === 'deck_price') {
@@ -69,6 +71,10 @@ class RetrieveData
         } elseif ($meta_key === 'average_mana') {
           $sort_value = $meta_value * 100;
           $decks[$post_id][$meta_key] = '<span class="sort-by">' . $sort_value . '</span><span class="gradient" style="background-color: rgba(245,105,115,' . ($sort_value / 450) . ');">' . $meta_value . '</span>';
+        } elseif ($meta_key === 'has_win') {
+          $decks[$post_id][$meta_key] = '<span class="' . str_replace(" ", "-", $meta_value) . '">' . $meta_value . '</span>';
+        } elseif ($meta_key === 'power_rank') {
+          $decks[$post_id][$meta_key] = '<span class="gradient" style="background-color: rgba(253,88,0,' . $meta_value / 10 . ');">' . $meta_value . '</span>';
         } elseif ($meta_key === 'battles') {
           $decks[$post_id][$meta_key] = '<span class="gradient" style="background-color: rgba(255,105,5,' . (($meta_value + 1) / 5) . ');">' . $meta_value . '</span>';
         } elseif ($meta_key === 'planeswalkers') {

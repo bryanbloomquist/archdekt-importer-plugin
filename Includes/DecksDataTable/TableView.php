@@ -63,7 +63,7 @@ class TableView extends \WP_List_Table
     $columns    = Columns::define_table_columns();
     $hidden     = [];
     $sortable   = Columns::set_sortable_columns();
-    $primary    = 'deck_name';
+    $primary    = 'identity';
 
     $this->_column_headers = [$columns, $hidden, $sortable, $primary];
 
@@ -86,6 +86,8 @@ class TableView extends \WP_List_Table
       case 'deck_price':
       case 'total_mana':
       case 'average_mana':
+      case 'has_win':
+      case 'power_rank':
       case 'battles':
       case 'planeswalkers':
       case 'creatures':
@@ -105,7 +107,7 @@ class TableView extends \WP_List_Table
    */
   public function usort_reorder($a, $b)
   {
-    $orderby = (!empty($_GET['orderby'])) ? $_GET['orderby'] : 'deck_name';
+    $orderby = (!empty($_GET['orderby'])) ? $_GET['orderby'] : 'identity';
     $order   = (!empty($_GET['order'])) ? $_GET['order'] : 'asc';
 
     if ($orderby === 'deck_price') {

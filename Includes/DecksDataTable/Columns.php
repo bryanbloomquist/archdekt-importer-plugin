@@ -16,9 +16,11 @@ class Columns
   {
     $columns = [
       'deck_name'     => 'Deck Name',
+      'identity'      => 'Identity',
       'commander'     => 'Commander',
       'partner'       => 'Partner/Background',
-      'identity'      => 'Color Identity',
+      'has_win'       => 'Winner',
+      'power_rank'    => 'Power Rank',
       'salt_sum'      => 'Salt Sum',
       'deck_price'    => 'Deck Value',
       'total_mana'    => 'Total Mana Value',
@@ -43,9 +45,11 @@ class Columns
   {
     $sortable_columns = [
       'deck_name'     => ['deck_name', false],
+      'identity'      => ['identity', false],
       'commander'     => ['commander', false],
       'partner'       => ['partner', false],
-      'identity'      => ['identity', false],
+      'has_win'       => ['has_win', true],
+      'power_rank'    => ['power_rank', true],
       'salt_sum'      => ['salt_sum', true],
       'deck_price'    => ['deck_price', true],
       'total_mana'    => ['total_mana', true],

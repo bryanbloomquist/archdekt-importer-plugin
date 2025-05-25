@@ -8,11 +8,12 @@
         th {
           border: 1px solid;
           vertical-align: bottom;
-          &.column-identity,
           &.column-salt_sum,
           &.column-deck_price,
           &.column-total_mana,
           &.column-average_mana,
+          &.column-has_win,
+          &.column-power_rank,
           &.column-battles,
           &.column-planeswalkers,
           &.column-creatures,
@@ -41,6 +42,8 @@
         td {
           border: 1px solid;
           &.column-identity,
+          &.column-has_win,
+          &.column-power_rank,
           &.column-salt_sum,
           &.column-deck_price,
           &.column-total_mana,
@@ -55,7 +58,9 @@
           &.column-lands {
             padding: 0;
             position: relative;
-            span.gradient {
+            span.gradient,
+            span.Winner,
+            span.Not-Yet {
               color: #000;
               padding: 8px 10px;
               position: absolute;
@@ -184,8 +189,20 @@
       display: none;
     }
     .column-identity {
-      width: 99px;
+      width: 100px;
       text-align: center;
+    }
+    .column-has_win {
+      width: 69px;
+      text-align: center;
+      color: white;
+      border-color: black;
+      span.Not-Yet {
+        background-color: lightcoral;
+      }
+      span.Winner {
+        background-color: lightgreen;
+      }
     }
     .column-salt_sum {
       width: 50px;
@@ -194,6 +211,15 @@
     .column-deck_price {
       width: 70px;
       text-align: center;
+    }
+    .column-power_rank {
+      width: 40px;
+      text-align: center;
+      color: white;
+      border-color: black;
+      .gradient {
+        color: black;
+      }
     }
     .column-total_mana,
     .column-average_mana {

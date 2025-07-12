@@ -22,8 +22,8 @@ class DecksPostPage
 			'Archidekt Informations',
 			[self::class, 'display_deck_info_sidebar_meta_box'],
 			'deck',
-			'normal',
-			'default',
+			'side',
+			'high',
 		);
 	}
 

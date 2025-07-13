@@ -48,6 +48,9 @@ class DecksPostPage
 
 	public static function display_win_loss_table($post)
 	{
+		if ($post->post_type !== 'deck') {
+			return;
+		}
 		$postID = $post->ID;
 		$win_loss_data = get_post_meta($postID, 'win_loss_data', true);
 		$has_win = get_post_meta($postID, 'has_win', true);
@@ -201,6 +204,9 @@ class DecksPostPage
 
 	public static function display_power_ranking($post)
 	{
+		if ($post->post_type !== 'deck') {
+			return;
+		}
 		$postID = $post->ID;
 		$power_ranking = get_post_meta($postID, 'power_ranking', true);
 		if (empty($power_ranking)) {
@@ -265,6 +271,9 @@ class DecksPostPage
 
 	public static function display_power_ranking_form($post)
 	{
+		if ($post->post_type !== 'deck') {
+			return;
+		}
 		$postID = $post->ID;
 	?>
 		<div class="postbox power-ranking-container">
@@ -390,10 +399,18 @@ class DecksPostPage
 	}
 }
 
-add_action('admin_init', [DecksPostPage::class, 'add_deck_info_sidebar_meta_box']);
-add_action('edit_form_after_title', [DecksPostPage::class, 'display_win_loss_table']);
+add_action('add_meta_boxes', function ($post_type, $post) {
+	if ($post_type === 'deck') {
+		DecksPostPage::add_deck_info_sidebar_meta_box();
+	}
+}, 10, 2);
+add_action('edit_form_after_title', function ($post) {
+	if ($post->post_type === 'deck') {
+		DecksPostPage::display_win_loss_table($post);
+		DecksPostPage::display_power_ranking($post);
+		DecksPostPage::display_power_ranking_form($post);
+	}
+});
 add_action('admin_init', [DecksPostPage::class, 'handle_remove_row']);
 add_action('admin_init', [DecksPostPage::class, 'handle_win_loss_form_submit']);
-add_action('edit_form_after_title', [DecksPostPage::class, 'display_power_ranking']);
-add_action('edit_form_after_title', [DecksPostPage::class, 'display_power_ranking_form']);
 add_action('admin_init', [DecksPostPage::class, 'handle_power_ranking_calculation']);
